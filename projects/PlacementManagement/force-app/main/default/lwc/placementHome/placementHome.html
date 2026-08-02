@@ -1,0 +1,70 @@
+<template>
+
+    <lightning-card title={dashboardTitle}>
+
+        <div class="slds-p-around_medium">
+
+            <h2>{welcomeMessage}</h2>
+
+            <br>
+
+            <p>Total Companies : {companyCount}</p>
+
+            <p>Total Jobs : {jobCount}</p>
+
+            <p>Total Applications : {applicationCount}</p>
+
+            <br>
+
+            <lightning-button
+                label="Refresh Dashboard"
+                variant="brand"
+                onclick={handleRefresh}>
+            </lightning-button>
+
+            <br><br>
+
+            <lightning-input
+                label="Search Job"
+                placeholder="Enter job name..."
+                onchange={handleSearch}>
+            </lightning-input>
+
+            <br>
+
+            <p>You typed: {searchJob}</p>
+
+            <br>
+
+        <template lwc:if={hasJobs}>
+            <p style="color:green;">
+                ✅ Jobs Available
+            </p>
+        </template>
+
+        <template lwc:else>
+            <p style="color:red;">
+                ❌ No Jobs Available
+            </p>
+        </template>
+
+        </div>
+
+    </lightning-card>
+
+    <br>
+
+    <h2>Available Jobs</h2>
+
+    <template for:each={jobList} for:item="job">
+
+        <div key={job.id}
+            class="slds-box slds-m-bottom_small">
+
+            {job.name}
+
+        </div>
+
+    </template>
+
+</template>
