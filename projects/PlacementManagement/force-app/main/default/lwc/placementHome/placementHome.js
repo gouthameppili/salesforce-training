@@ -1,6 +1,43 @@
-import { LightningElement } from 'lwc';
-
+import { LightningElement, wire } from 'lwc';
+import getStudents from '@salesforce/apex/DashboardController.getStudents';
+import getJobs from '@salesforce/apex/DashboardController.getJobs';
 export default class PlacementHome extends LightningElement {
+
+    students;
+    jobs;
+    @wire(getStudents)
+    wiredStudents({ data, error }) {
+
+        if (data) {
+
+            this.students = data;
+
+            console.log(data);
+
+        } else if (error) {
+
+            console.error(error);
+
+        }   
+
+    }
+
+    @wire(getJobs)
+    wiredJobs({ data, error }) {
+
+        if (data) {
+
+            this.jobs = data;
+
+            console.log(data);
+
+        } else if (error) {
+
+            console.error(error);
+
+        }
+
+    }
 
     dashboardTitle = "Placement Management Dashboard";
 

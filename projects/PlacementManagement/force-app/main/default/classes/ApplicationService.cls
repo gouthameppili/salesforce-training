@@ -46,4 +46,21 @@ public with sharing class ApplicationService {
 
     }
 
+    public static String updateApplicationStatus(Id applicationId, String newStatus){
+
+        Application__c application = [
+            SELECT Id, Status__c
+            FROM Application__c
+            WHERE Id = :applicationId
+            LIMIT 1
+        ];
+
+        application.Status__c = newStatus;
+
+        update application;
+
+        return 'Application Status Updated Successfully';
+
+    }
+
 }
