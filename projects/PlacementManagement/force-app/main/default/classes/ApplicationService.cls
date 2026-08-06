@@ -140,4 +140,43 @@ public with sharing class ApplicationService {
         }
 
     }
+
+    public static void processShortlistedApplications(List<Application__c> newApplications, Map<Id, Application__c> oldMap){
+
+        Set<Id> studentIds = new Set<Id>();
+
+        for(Application__c app : newApplications){
+
+            Application__c oldApp = oldMap.get(app.Id);
+
+            if(
+                oldApp.Status__c != 'Shortlisted' &&
+                app.Status__c == 'Shortlisted'
+            ){
+
+                studentIds.add(app.Student__c);
+
+            }
+
+        }
+
+        if(studentIds.isEmpty()){
+            return;
+        }
+
+        List<Student__c> studentsToUpdate = [
+            SELECT Id, Placement_Status__c
+            FROM Student__c
+            WHERE Id IN :studentIds
+        ];
+
+        for(Student__c student : studentsToUpdate){
+
+            student.Placement_Status__c = 'Shortlisted';
+
+        }
+
+        update studentsToUpdate;
+
+    }
 }
