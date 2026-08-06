@@ -1,97 +1,68 @@
-# Day 5 - Business Logic & Service Layer Architecture
+# Day 5 - Business Logic & Service Layer
 
-## 🎯 Objective
+## Objective
 
-Learn how enterprise Salesforce applications organize business logic using Apex Service Classes.
+Learn how to organize business logic in Salesforce using the Service Layer approach instead of placing all logic inside Triggers or Lightning Web Components.
 
 ---
 
-## 📚 Concepts Learned
+## Topics Covered
 
 - Business Logic
 - Business Rules
-- Business Responsibilities
-- Software Architecture
 - Service Layer
 - Single Responsibility Principle
 - Method Design
 - Parameters
 - Return Values
+- Software Architecture
 
 ---
 
-## 🏗️ Architecture Designed
+## Practical Work
 
-Lightning Web Component
+Created an Apex Service Class named **ApplicationService** to handle the business logic for student applications.
 
-↓
+Implemented the following methods:
 
-Apex Controller (Upcoming)
+### submitApplication()
 
-↓
+Business rules implemented:
 
-ApplicationService
+- Retrieve Student details
+- Retrieve Job details
+- Validate student CGPA
+- Check application deadline
+- Prevent duplicate applications
+- Create a new Application record
+- Return meaningful success or error messages
 
-↓
+### updateApplicationStatus()
 
-SOQL
-
-↓
-
-Salesforce Database
-
----
-
-## 🛠️ Apex Service
-
-Created
-
-ApplicationService.cls
-
-Implemented
-
-submitApplication()
-
-Business Logic
-
-- Receive Application
-- Validate CGPA
-- Validate Deadline
-- Prevent Duplicate Applications
-- Save Application
-- Return Success/Error Message
+- Update the status of an existing application.
 
 ---
 
-## Engineering Principles Learned
+## Project Structure
 
-- Understand before implementing.
-- Separate responsibilities.
-- Build incrementally.
-- Good method names improve readability.
-- Business requirements should drive software design.
+Classes:
 
----
-
-## 📂 Project Implementation
-
-Relevant files:
-
-- classes/ApplicationService.cls
-- classes/ApplicationTriggerHandler.cls
-- triggers/ApplicationTrigger.trigger
+- ApplicationService.cls
+- ApplicationTriggerHandler.cls
+- ApplicationTrigger.trigger
 
 ---
 
-## 💡 Key Learnings
+## Key Learnings
 
-- Business Logic is more important than syntax.
-- Architecture should be designed before implementation.
-- Apex classes represent business responsibilities.
-- Methods should communicate clear outcomes.
+- Business logic should be placed inside a Service Class.
+- A Trigger or LWC should delegate work to the Service Layer.
+- Methods should perform one specific responsibility.
+- Clear method names make the code easier to understand and maintain.
+- Good software architecture makes future enhancements easier.
 
 ---
 
-## 🚀 Outcome
+## Outcome
 
-Designed and implemented the first Service Layer for the Placement Management System following enterprise software engineering principles.
+Built the Service Layer for the Placement Management System and moved the application's business rules into reusable Apex methods following Salesforce development best practices.

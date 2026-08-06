@@ -1,70 +1,61 @@
 # Day 3 - Validation Rules & Flow Automation
 
-## 🎯 Objective
+## Objective
 
-Automate business processes using Salesforce declarative tools before writing Apex.
+Learn how to automate business processes using Salesforce Flows and Validation Rules without writing Apex code.
 
 ---
 
-## 📚 Concepts Learned
+## Topics Covered
 
 - Validation Rules
-- Record Triggered Flow
+- Record-Triggered Flow
 - Before Save Flow
 - After Save Flow
-- Flow vs Trigger
 - Flow Builder
+- Flow vs Trigger
 
 ---
 
-## 🛠️ Features Implemented
+## Practical Work
 
 ### Before Save Flow
 
-Automatically populates
-
-- Application Date
-
----
+Created a Before Save Flow to automatically populate the Application Date when a new application is created.
 
 ### After Save Flow
 
-Sends an email notification to the Placement Officer whenever a student submits an application.
-
----
+Created an After Save Flow to send an email notification to the Placement Officer whenever a student submits an application.
 
 ### Offer Letter Automation
 
-Automatically creates an Offer Letter record when the Application Status changes to "Shortlisted".
-
----
+Built another Record-Triggered Flow to automatically create an Offer Letter record when an application's status changes to **Shortlisted**.
 
 ### Validation Rule
 
-Implemented validation to ensure data quality for student applications.
+Created a validation rule to prevent students from applying if their CGPA does not meet the minimum CGPA required for the selected job.
 
 ---
 
-## 📸 Screenshots
+## Project Structure
 
-- Before Save Flow
-- After Save Flow
-- Email Notification
-- Offer Letter Creation
-- Validation Rule
-- Successful Flow Execution
+- Application_Before_Save_Flow
+- Send_Placement_Officer_Email
+- Application_Offer_Letter_Flow
+- CGPA_Validation
 
 ---
 
-## 💡 Key Learnings
+## Key Learnings
 
-- Use declarative automation whenever possible.
-- Before Save Flow is ideal for updating the same record.
-- After Save Flow is used for related records and email notifications.
-- Apex should only be used for complex business logic.
+- Use Flows whenever business requirements can be implemented declaratively.
+- Before Save Flows are best for updating the same record.
+- After Save Flows are useful for creating related records and sending notifications.
+- Validation Rules help maintain data quality before records are saved.
+- Apex should be used only when declarative tools cannot satisfy the requirement.
 
 ---
 
-## 🚀 Outcome
+## Outcome
 
-Successfully automated multiple business processes without writing additional Apex code.
+Automated the application process using Salesforce Flows and Validation Rules by populating fields automatically, sending email notifications, generating offer letters, and enforcing business validations without additional Apex code.

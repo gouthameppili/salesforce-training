@@ -1,14 +1,15 @@
-# Day 2 - Apex Triggers & Governor Limits
+# Day 2 - Apex Triggers
 
-## 🎯 Objective
+## Objective
 
-Design and implement a bulkified Apex Trigger for a Placement Management System using Salesforce best practices.
+Learn how Apex Triggers work and implement business rules for the Placement Management System using Salesforce best practices.
 
 ---
 
-## 📚 Concepts Learned
+## Topics Covered
 
-- Before Trigger vs After Trigger
+- Before Trigger
+- After Trigger
 - Trigger Context Variables
 - Trigger Handler Pattern
 - Governor Limits
@@ -19,75 +20,53 @@ Design and implement a bulkified Apex Trigger for a Placement Management System 
 
 ---
 
-## 🛠️ Business Scenario
+## Practical Work
 
-Built an Application Trigger to automate the student application process.
+Created an Apex Trigger for the `Application__c` object.
 
-Business Rules Implemented
+Implemented the following business rules:
 
-✅ Student CGPA Validation
-
-✅ Duplicate Application Prevention
-
-✅ Last Date Validation
-
-✅ Default Status = Applied
-
-✅ Meaningful Error Messages
-
----
-
-## 🧠 Architecture
-
-ApplicationTrigger
-
-↓
-
-ApplicationTriggerHandler
+- Validate student CGPA before allowing an application.
+- Prevent duplicate applications for the same job.
+- Prevent applications after the job deadline.
+- Automatically set the application status to **Applied**.
+- Display meaningful validation messages using `addError()`.
 
 ---
 
 ## Bulkification
 
-Used
+Applied bulk processing techniques to make the trigger scalable.
+
+Used:
 
 - Set<Id>
 - Map<Id, Student__c>
 - Map<Id, Job__c>
 
-to avoid SOQL inside loops.
+Ensured:
+
+- No SOQL inside loops.
+- Trigger supports multiple records in a single transaction.
 
 ---
 
-## Testing
+## Project Structure
 
-Verified:
-
-- Successful Application
-- Low CGPA
-- Duplicate Application
-- Application after Deadline
+- ApplicationTrigger.trigger
+- ApplicationTriggerHandler.cls
 
 ---
 
-## 📸 Screenshots
+## Key Learnings
 
-- Successful Insert
-- Failed Insert
-- Trigger Code
-- Debug Logs
-
----
-
-## 💡 Key Learnings
-
-- Always bulkify Apex.
-- Never place SOQL inside loops.
-- Keep triggers lightweight.
-- Store business logic inside handler classes.
+- A Trigger should respond only to record events.
+- Business logic should be moved to a Trigger Handler.
+- Bulkification is essential to avoid governor limit exceptions.
+- Use Sets and Maps to retrieve related records efficiently.
 
 ---
 
-## 🚀 Outcome
+## Outcome
 
-Built a production-style Trigger following Salesforce best practices.
+Built a bulk-safe Apex Trigger that validates applications and follows Salesforce development best practices.

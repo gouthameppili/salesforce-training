@@ -1,103 +1,79 @@
-# Day 7 - Trigger Framework & Service Layer Architecture
+# Day 7 - Trigger Framework & Service Layer
 
-## 🎯 Objective
+## Objective
 
-Learn how to design scalable Salesforce applications by separating Trigger logic from Business Logic using the Service Layer pattern.
+Learn how to organize Apex code using the Trigger Framework by separating Trigger logic from business logic.
 
 ---
 
-## 📚 Concepts Learned
+## Concepts Learned
 
 - Trigger Framework
 - Trigger Handler Pattern
-- Service Layer Pattern
+- Service Layer
 - Separation of Concerns
-- Clean Architecture
 - Single Responsibility Principle
-- Business Logic Organization
+- Clean Architecture
 
 ---
 
-## 🏗️ Architecture
+## Practical Work
 
-Application Trigger
-
-↓
-
-Application Trigger Handler
-
-↓
-
-Application Service
-
-↓
-
-Salesforce Database
-
----
-
-## 🛠️ Features Implemented
+Refactored the existing Placement Management System to follow the Trigger Framework.
 
 ### Trigger
 
-- Detects record events
-- Delegates processing to the Trigger Handler
-- Keeps Trigger lightweight
+Updated the Trigger to handle different trigger events while keeping it lightweight.
+
+Supported events:
+
+- Before Insert
+- Before Update
+- After Update
 
 ---
 
 ### Trigger Handler
 
-- Handles trigger events
-- Delegates business processing to the Service Layer
-- Maintains clean and reusable architecture
+Moved the responsibility of processing trigger events to the Trigger Handler.
+
+The handler now delegates business processing to the Service Layer instead of containing business logic.
 
 ---
 
 ### Application Service
 
-Centralized business logic including:
+Organized all business validations inside the Service Layer.
+
+Business rules include:
 
 - Student Eligibility Validation
 - CGPA Validation
 - Application Deadline Validation
-- Duplicate Application Validation
+- Duplicate Application Check
 - Automatic Status Assignment
 - Application Submission
 - Application Status Update
 
 ---
 
-## 💻 Design Principles
-
-- Trigger contains minimal code.
-- Business rules are isolated inside the Service Layer.
-- Trigger Handler coordinates execution.
-- Business logic remains reusable and maintainable.
-
----
-
-## 📂 Project Structure
-
-classes/
+## Files Updated
 
 - ApplicationTrigger.trigger
 - ApplicationTriggerHandler.cls
 - ApplicationService.cls
-- DashboardController.cls
 
 ---
 
-## 🧠 Key Learnings
+## Key Learnings
 
-- Triggers should only respond to database events.
+- A Trigger should only respond to record events.
 - Trigger Handlers improve code organization.
-- Service Layer centralizes business logic.
-- Separation of Concerns improves scalability.
-- Modular architecture simplifies future enhancements and maintenance.
+- Business logic should be placed inside the Service Layer.
+- Separating responsibilities makes the application easier to maintain and extend.
 
 ---
 
-## 🚀 Outcome
+## Outcome
 
-Successfully implemented a Trigger Framework using Trigger, Trigger Handler, and Service Layer to build a clean, maintainable, and scalable Salesforce application architecture following enterprise development practices.
+Refactored the project to follow the Trigger Framework by keeping the Trigger lightweight and moving business logic into reusable Service Layer methods.

@@ -1,71 +1,75 @@
 # Day 4 - Lightning Web Components (LWC)
 
-## 🎯 Objective
+## Objective
 
-Build the frontend of the Placement Management System using Lightning Web Components.
+Learn the basics of Lightning Web Components and build the first user interface for the Placement Management System.
 
 ---
 
-## 📚 Concepts Learned
+## Topics Covered
 
-- Lightning Web Components
+- Lightning Web Components (LWC)
 - Component Structure
 - HTML
 - JavaScript
-- Meta XML
-- Deployment
+- Meta XML Configuration
 - Data Binding
 - Event Handling
 - Conditional Rendering
 - List Rendering
+- Component Deployment
 
 ---
 
-## 🛠️ Components Built
+## Practical Work
 
-Created Placement Home Dashboard
+Created a **Placement Management Dashboard** using Lightning Web Components.
 
-Features:
+Implemented the following features:
 
-- Welcome Banner
-- Today's Date
-- Student Information
-- Dashboard Cards
+- Dashboard Title
+- Welcome Message
+- Dashboard Statistics
+- Search Box
 - Refresh Button
-- Status Update
-- Job List
 - Conditional Rendering
-- Mock Dashboard Data
+- List Rendering
+- Display of Mock Job Data
+
+Later connected the dashboard with Apex to display:
+
+- Student Records
+- Job Records
+
+using the `@wire` decorator.
 
 ---
 
-## LWC Files
+## Project Structure
 
-placementHome.html
+LWC Component:
 
-placementHome.js
+- placementHome.html
+- placementHome.js
+- placementHome.js-meta.xml
 
-placementHome.js-meta.xml
+Apex Controller:
 
----
-
-## 📂 Project Implementation
-
-The complete implementation for today's concepts is available in:
-
-projects/PlacementManagement/
----
-
-## 💡 Key Learnings
-
-- LWC is Salesforce's modern UI framework.
-- HTML defines the layout.
-- JavaScript handles logic and events.
-- Meta XML controls deployment.
-- Components are reusable.
+- DashboardController.cls
 
 ---
 
-## 🚀 Outcome
+## Key Learnings
 
-Built the first user interface for the Placement Management System using Lightning Web Components.
+- Lightning Web Components are used to build modern Salesforce user interfaces.
+- HTML defines the component layout.
+- JavaScript handles the component logic and events.
+- Meta XML controls where a component can be used.
+- `@wire` is used to retrieve Salesforce data from Apex.
+- Components can be reused across different Lightning pages.
+
+---
+
+## Outcome
+
+Built the first version of the Placement Management Dashboard and learned how to create Lightning Web Components, handle user interactions, and display Salesforce data using Apex.

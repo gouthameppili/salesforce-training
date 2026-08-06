@@ -1,54 +1,31 @@
 # Day 6 - SOQL, DML & Apex Controller Integration
 
-## 🎯 Objective
+## Objective
 
-Learn how Salesforce retrieves, validates, and stores business data using SOQL, DML, Apex Controllers, and Lightning Web Components.
+Learn how to retrieve, validate, and store Salesforce data using SOQL, DML, Apex Controllers, and Lightning Web Components.
 
 ---
 
-## 📚 Concepts Learned
+## Concepts Learned
 
-- SOQL (Salesforce Object Query Language)
-- DML (Data Manipulation Language)
+- SOQL
+- DML
 - Apex Controller
 - @AuraEnabled
 - @wire
-- Data Retrieval from Salesforce
+- Client-Server Architecture
 - Business Validation
 - CRUD Operations
-- Client-Server Architecture
 
 ---
 
-## 🏗️ Architecture
+## Practical Work
 
-Lightning Web Component
+### Apex Controller
 
-↓
+Created a **DashboardController** to expose Salesforce data to Lightning Web Components.
 
-DashboardController
-
-↓
-
-ApplicationService
-
-↓
-
-SOQL
-
-↓
-
-Salesforce Database
-
----
-
-## 🛠️ Features Implemented
-
-### DashboardController.cls
-
-Created an Apex Controller to expose Salesforce data to Lightning Web Components.
-
-Methods Implemented:
+Implemented:
 
 - getStudents()
 - getJobs()
@@ -57,50 +34,46 @@ Methods Implemented:
 
 ### Lightning Web Component
 
-Connected LWC with Apex using:
+Connected the Placement Dashboard with Apex using:
 
 - @wire
 - @AuraEnabled(cacheable=true)
 
-Displayed real-time:
+Displayed live data for:
 
-- Student Records
-- Job Records
+- Students
+- Jobs
 
-instead of mock data.
+instead of using mock data.
 
 ---
 
-### ApplicationService
+### Application Service
 
-Implemented business operations:
+Enhanced the **ApplicationService** by implementing:
 
-- Retrieve Student
-- Retrieve Job
-- Validate CGPA
-- Check Application Deadline
-- Prevent Duplicate Applications
-- Create Application Record
+- Student Retrieval
+- Job Retrieval
+- CGPA Validation
+- Deadline Validation
+- Duplicate Application Check
+- Create Application
 - Update Application Status
-- Return Meaningful Success/Error Messages
+- Meaningful Success and Error Messages
 
 ---
 
-## 💻 Apex Concepts Practiced
+### SOQL & DML
 
-### SOQL
+Practiced:
 
-- Retrieve Student records
-- Retrieve Job records
-- Retrieve existing Applications
+- Retrieving records using SOQL.
+- Creating records using `insert`.
+- Updating records using `update`.
 
-### DML
+Also understood the correct order of execution:
 
-- insert
-- update
-
-### Business Logic Flow
-
+```
 Retrieve Data
 
 ↓
@@ -114,33 +87,34 @@ Perform DML
 ↓
 
 Return Response
+```
 
 ---
 
-## 🧠 Key Learnings
+## Project Structure
 
-- SOQL is used to retrieve Salesforce data.
-- DML is used to create and modify Salesforce records.
-- LWC cannot directly access the database.
-- Apex Controller acts as the bridge between LWC and Salesforce.
-- Business validations should always happen before DML operations.
-- Query only the fields required for the business requirement.
+Classes:
 
----
+- DashboardController.cls
+- ApplicationService.cls
 
-## 📂 Project Implementation
+LWC:
 
-Relevant Files
-
-- classes/DashboardController.cls
-- classes/ApplicationService.cls
-- lwc/placementHome/*
-- objects/Application__c
-- objects/Student__c
-- objects/Job__c
+- placementHome
 
 ---
 
-## 🚀 Outcome
+## Key Learnings
 
-Successfully integrated Lightning Web Components with Apex Controllers to retrieve live Salesforce data using SOQL and implemented business operations using DML and Service Layer architecture.
+- SOQL is used to retrieve Salesforce records.
+- DML is used to create and update records.
+- LWC cannot directly access the Salesforce database.
+- Apex Controllers act as the bridge between LWC and Salesforce.
+- Business validations should be completed before performing DML operations.
+- Retrieve only the fields required for the business logic.
+
+---
+
+## Outcome
+
+Connected Lightning Web Components with Apex Controllers to display live Salesforce data and implemented business operations using SOQL, DML, and the Service Layer approach.

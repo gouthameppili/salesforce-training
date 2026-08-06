@@ -1,39 +1,44 @@
 # Day 1 - Salesforce Fundamentals & Data Modeling
 
-## 🎯 Objective
+## Objective
 
-Build a strong foundation of the Salesforce Platform by understanding data modeling, object relationships, Apex basics, SOQL, and trigger fundamentals.
+Understand the basics of the Salesforce platform and learn how business data is stored using objects, fields, records, and relationships.
 
 ---
 
-## 📚 Concepts Learned
+## Topics Covered
 
-- Salesforce Multi-Tenant Architecture
+- Salesforce Platform Overview
+- Multi-Tenant Architecture
 - Standard Objects vs Custom Objects
 - Fields and Records
-- Lookup vs Master-Detail Relationship
-- Apex Basics
-- SOQL Queries
+- Lookup Relationship
+- Master-Detail Relationship
+- Introduction to Apex
+- Basic SOQL Queries
 - Execute Anonymous Window
-- Introduction to Apex Triggers
 
 ---
 
-## 🛠️ Hands-on Work
+## Practical Work
 
-### Data Modeling
+### Hospital Management System
 
-Designed a Hospital Management System consisting of:
+Created a simple Hospital Management System for practice.
+
+Objects created:
 
 - Patient
 - Doctor
 - Appointment
 
-Implemented relationships using Lookup fields.
+Connected the objects using Lookup Relationships to understand how records are related in Salesforce.
 
 ---
 
 ### SOQL Practice
+
+Executed different SOQL queries using Execute Anonymous.
 
 Practiced:
 
@@ -46,35 +51,38 @@ Practiced:
 
 ---
 
-### Apex
+### Apex Basics
+
+Practiced basic Apex concepts such as:
 
 - Variables
+- If-Else Statements
 - Loops
-- Collections
-- Conditional Statements
-- Execute Anonymous
+- Collections (List, Set, Map)
+
+Executed all examples using the Execute Anonymous Window.
 
 ---
 
-## 📸 Screenshots
+## Files & Resources
 
-- Object Manager
-- Custom Objects
-- Relationship Fields
-- SOQL Output
-- Debug Logs
-
----
-
-## 💡 Key Learnings
-
-- Salesforce stores business data using Objects and Records.
-- Relationships model real-world business scenarios.
-- SOQL retrieves Salesforce data.
-- Apex enables server-side business logic.
+- Day 1 Notes
+- Apex Practice Code
+- SOQL Practice Queries
+- Screenshots
 
 ---
 
-## 🚀 Outcome
+## Key Learnings
 
-Successfully created a Salesforce data model and gained hands-on experience with Apex and SOQL.
+- Salesforce stores business data in Objects and Records.
+- Relationships help connect different objects.
+- SOQL is used to retrieve data from Salesforce.
+- Apex is Salesforce's server-side programming language.
+- Execute Anonymous is useful for testing Apex code quickly.
+
+---
+
+## Outcome
+
+Completed the Salesforce fundamentals and built a basic understanding of data modeling, relationships, Apex, and SOQL, which will be used in the upcoming days.
