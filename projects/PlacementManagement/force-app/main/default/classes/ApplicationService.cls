@@ -149,13 +149,9 @@ public with sharing class ApplicationService {
 
             Application__c oldApp = oldMap.get(app.Id);
 
-            if(
-                oldApp.Status__c != 'Shortlisted' &&
-                app.Status__c == 'Shortlisted'
-            ){
-
+            if(oldApp.Status__c != 'Shortlisted' && app.Status__c == 'Shortlisted'){
+                System.debug('Status changed to Shortlisted');
                 studentIds.add(app.Student__c);
-
             }
 
         }
@@ -177,6 +173,18 @@ public with sharing class ApplicationService {
         }
 
         update studentsToUpdate;
+
+        for(Application__c app : newApplications){
+
+            Application__c oldApp = oldMap.get(app.Id);
+
+            if(oldApp.Status__c != 'Shortlisted' && app.Status__c == 'Shortlisted'){
+                System.debug('Queueable is about to be enqueued');
+                System.enqueueJob(new ApplicationPostProcessingJob(app.Id));
+                NotificationService.sendApplicationEmail(app.Id);
+            }
+
+        }
 
     }
 }
