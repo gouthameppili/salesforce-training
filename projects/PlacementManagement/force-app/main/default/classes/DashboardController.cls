@@ -13,18 +13,18 @@ public with sharing class DashboardController {
 
     }
 
-    @AuraEnabled(cacheable=true)
+   @AuraEnabled(cacheable=true)
     public static List<Job__c> getJobs() {
-
         return [
-            SELECT Id,
-                Name,
-                Minimum_CGPA__c,
-                Last_Date__c
+            SELECT Id, Name, Minimum_CGPA__c, Last_Date__c
             FROM Job__c
-            ORDER BY Name
+            ORDER BY Last_Date__c ASC
         ];
+    }
 
+    @AuraEnabled
+    public static String submitApplication(Id studentId, Id jobId) {
+        return ApplicationService.submitApplication(studentId, jobId);
     }
 
 }

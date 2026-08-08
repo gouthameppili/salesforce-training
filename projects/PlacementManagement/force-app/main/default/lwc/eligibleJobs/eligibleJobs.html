@@ -1,0 +1,45 @@
+<template>
+
+    <lightning-card title="Eligible Jobs">
+
+        <div class="slds-p-around_medium">
+
+            <template for:each={jobs} for:item="job">
+
+                <c-job-card
+                    key={job.Id}
+                    job={job}
+                    onapply={handleApply}>
+                </c-job-card>
+
+            </template>
+
+            <template lwc:if={selectedJobId}>
+
+                <div class="slds-m-top_medium slds-p-around_medium">
+
+                    <p>
+                        Selected Job Id: {selectedJobId}
+                    </p>
+
+                </div>
+
+            </template>
+
+            <template lwc:if={applicationMessage}>
+
+                <div class="slds-m-top_medium slds-p-around_medium">
+
+                    <p>
+                        {applicationMessage}
+                    </p>
+
+                </div>
+
+            </template>
+
+        </div>
+
+    </lightning-card>
+
+</template>
