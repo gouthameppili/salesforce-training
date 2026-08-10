@@ -93,3 +93,5 @@ The parent receives the selected Job Id and continues the application process th
 ## Outcome
 
 Successfully integrated Lightning Web Components with the Apex backend and implemented reusable parent-child component architecture in the Placement Management System.
+
+
