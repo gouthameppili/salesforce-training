@@ -11,7 +11,5 @@ export default class JobCard extends LightningElement {
         });
 
         this.dispatchEvent(event);
-
     }
-
 }

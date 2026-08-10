@@ -1,0 +1,78 @@
+<template>
+
+    <lightning-card title="My Applications">
+
+        <div class="slds-p-around_medium">
+
+            <lightning-combobox
+                label="Select Student"
+                placeholder="Select a student"
+                options={studentOptions}
+                value={selectedStudentId}
+                onchange={handleStudentChange}
+                required>
+            </lightning-combobox>
+
+
+            <template lwc:if={isLoading}>
+
+                <div class="slds-m-top_medium">
+
+                    <lightning-spinner
+                        alternative-text="Loading applications">
+                    </lightning-spinner>
+
+                </div>
+
+            </template>
+
+
+            <template lwc:if={errorMessage}>
+
+                <div class="slds-text-color_error slds-m-top_medium">
+
+                    {errorMessage}
+
+                </div>
+
+            </template>
+
+
+            <template lwc:if={hasApplications}>
+
+                <div class="slds-m-top_medium">
+
+                    <template
+                        for:each={applications}
+                        for:item="application">
+
+                        <c-application-card
+                            key={application.Id}
+                            application={application}>
+                        </c-application-card>
+
+                    </template>
+
+                </div>
+
+            </template>
+
+
+            <template lwc:else>
+
+                <template lwc:if={selectedStudentId}>
+
+                    <c-empty-state
+                        title="No Applications"
+                        message="This student has not applied for any jobs yet.">
+                    </c-empty-state>
+
+                </template>
+
+            </template>
+
+        </div>
+
+    </lightning-card>
+
+</template>

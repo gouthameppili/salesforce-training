@@ -1,81 +1,160 @@
 import { LightningElement, wire } from 'lwc';
+import { refreshApex } from '@salesforce/apex';
+
+import getStudents from '@salesforce/apex/DashboardController.getStudents';
 import getJobs from '@salesforce/apex/DashboardController.getJobs';
 import submitApplication from '@salesforce/apex/DashboardController.submitApplication';
 
 export default class EligibleJobs extends LightningElement {
 
-    jobs;
+    students = [];
+    jobs = [];
+
+    selectedStudentId;
     selectedJobId;
 
-    applicationMessage;
-    isApplying = false;
+    applicationMessage = '';
 
-    connectedCallback() {
-        console.log('Eligible Jobs component connected');
-    }
+    isLoading = false;
+    isSaving = false;
+    errorMessage = '';
 
-    renderedCallback() {
-        console.log('Eligible Jobs component rendered');
-    }
+    wiredJobsResult;
 
-    @wire(getJobs)
-    wiredJobs({ data, error }) {
+    @wire(getStudents)
+    wiredStudents({ data, error }) {
 
         if (data) {
 
-            this.jobs = data;
-
-            console.log('Jobs from Salesforce:', data);
+            this.students = data;
 
         } else if (error) {
 
-            console.error('Error loading jobs:', error);
+            console.error('Student Error:', error);
 
+            this.errorMessage =
+                'Unable to load students.';
         }
-
     }
 
-    handleViewDetails(event) {
+    @wire(getJobs, { studentId: '$selectedStudentId' })
+    wiredJobs(result) {
 
-        this.selectedJobId = event.currentTarget.dataset.id;
+        this.wiredJobsResult = result;
 
-        console.log('Selected Job Id:', this.selectedJobId);
+        if (!this.selectedStudentId) {
 
+            this.jobs = [];
+            this.isLoading = false;
+
+            return;
+        }
+
+        this.isLoading = true;
+
+        if (result.data) {
+
+            this.jobs = result.data;
+            this.errorMessage = '';
+            this.isLoading = false;
+
+        } else if (result.error) {
+
+            console.error('Job Error:', result.error);
+
+            this.jobs = [];
+
+            this.errorMessage =
+                result.error.body?.message ||
+                'Unable to load eligible jobs.';
+
+            this.isLoading = false;
+        }
+    }
+
+    get studentOptions() {
+
+        return this.students.map(student => {
+
+            return {
+                label: `${student.Name} - CGPA: ${student.CGPA__c}`,
+                value: student.Id
+            };
+
+        });
+    }
+
+    get hasJobs() {
+
+        return this.jobs &&
+               this.jobs.length > 0;
+    }
+
+    handleStudentChange(event) {
+
+        this.selectedStudentId =
+            event.detail.value;
+
+        this.applicationMessage = '';
+        this.selectedJobId = '';
+
+        console.log(
+            'Selected Student:',
+            this.selectedStudentId
+        );
     }
 
     async handleApply(event) {
 
         const jobId = event.detail;
 
-        const studentId = 'a04hg000000Bs3VAAS';
+        this.selectedJobId = jobId;
 
-        this.isApplying = true;
         this.applicationMessage = '';
+
+        if (!this.selectedStudentId) {
+
+            this.applicationMessage =
+                'Please select a student before applying.';
+
+            return;
+        }
+
+        this.isSaving = true;
 
         try {
 
-            const result = await submitApplication({
-                studentId: studentId,
-                jobId: jobId
-            });
+            const result =
+                await submitApplication({
+
+                    studentId:
+                        this.selectedStudentId,
+
+                    jobId:
+                        jobId
+
+                });
 
             this.applicationMessage = result;
 
-            console.log('Application Result:', result);
+            await refreshApex(
+                this.wiredJobsResult
+            );
 
         } catch (error) {
 
-            this.applicationMessage =
-                'Something went wrong while submitting the application.';
+            console.error(
+                'Application Error:',
+                error
+            );
 
-            console.error('Application Error:', error);
+            this.applicationMessage =
+                error.body?.message ||
+                'An error occurred while submitting the application.';
 
         } finally {
 
-            this.isApplying = false;
-
+            this.isSaving = false;
         }
-
     }
-
 }

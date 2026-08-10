@@ -1,0 +1,76 @@
+<template>
+
+    <lightning-card title="Student Profile - LDS">
+
+        <div class="slds-p-around_medium">
+
+            <lightning-input
+                label="Student Id"
+                value={studentId}
+                onchange={handleStudentIdChange}>
+            </lightning-input>
+
+            <div class="slds-m-top_medium">
+
+                <lightning-input
+                    label="Student Name"
+                    value={name}
+                    onchange={handleChange}
+                    data-field="name">
+                </lightning-input>
+
+            </div>
+
+            <div class="slds-m-top_medium">
+
+                <lightning-input
+                    label="CGPA"
+                    type="number"
+                    step="0.01"
+                    min="0"
+                    max="10"
+                    value={cgpa}
+                    onchange={handleChange}
+                    data-field="cgpa">
+                </lightning-input>
+
+            </div>
+
+            <div class="slds-m-top_medium">
+
+                <lightning-button
+                    label="Create"
+                    variant="brand"
+                    onclick={handleCreate}>
+                </lightning-button>
+
+                <lightning-button
+                    label="Update"
+                    class="slds-m-left_small"
+                    onclick={handleUpdate}>
+                </lightning-button>
+
+                <lightning-button
+                    label="Delete"
+                    variant="destructive"
+                    class="slds-m-left_small"
+                    onclick={handleDelete}>
+                </lightning-button>
+
+            </div>
+
+            <template lwc:if={message}>
+
+                <div class="slds-m-top_medium">
+
+                    <p>{message}</p>
+
+                </div>
+
+            </template>
+
+        </div>
+
+    </lightning-card>
+
+</template>
