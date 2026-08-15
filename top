@@ -1,0 +1,1001 @@
+warning: in the working copy of 'projects/PlacementManagement/README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'projects/PlacementManagement/force-app/main/default/lwc/studentProfile/studentProfile.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'projects/PlacementManagement/force-app/main/default/lwc/studentProfile/studentProfile.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'projects/PlacementManagement/force-app/main/default/triggers/ApplicationTrigger.trigger', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'projects/PlacementManagement/force-app/main/default/triggers/ApplicationTrigger.trigger-meta.xml', LF will be replaced by CRLF the next time Git touches it
+[1mdiff --git a/projects/PlacementManagement/README.md b/projects/PlacementManagement/README.md[m
+[1mindex 0d3b9a9..b457f0d 100644[m
+[1m--- a/projects/PlacementManagement/README.md[m
+[1m+++ b/projects/PlacementManagement/README.md[m
+[36m@@ -1,58 +1,741 @@[m
+[31m-# Salesforce DX Project[m
+[32m+[m[32m````markdown[m
+[32m+[m[32m# Placement Management System[m
+ [m
+[31m-Salesforce DX is a development approach that brings source-driven development, team collaboration, and continuous integration to the Salesforce Platform. Instead of working directly in an org through a web browser, you work with metadata as source files in a local DX project, track changes in version control, and deploy through automated processes.[m
+[32m+[m[32mA Salesforce-based Placement Management System designed to manage students, job opportunities, applications, placement processing, and communication with an external recruitment system.[m
+ [m
+[31m-This project template gets you started with the tools and structure you need to build Salesforce applications using source control, scratch orgs, and the Salesforce CLI.[m
+[32m+[m[32mThe project was built incrementally as part of Salesforce training, starting with the platform fundamentals and gradually adding automation, Apex, Lightning Web Components, asynchronous processing, and external integration.[m
+ [m
+[31m-## Prerequisites[m
+[32m+[m[32m---[m
+ [m
+[31m-Before you start, make sure you have:[m
+[32m+[m[32m## Project Overview[m
+ [m
+[31m-- **Salesforce CLI** - Download from [developer.salesforce.com/tools/salesforcecli](https://developer.salesforce.com/tools/salesforcecli). See [Install Salesforce CLI](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_install_cli.htm) for details.[m
+[31m-- **VS Code with Salesforce Extension Pack** - See [Installation Instructions](https://developer.salesforce.com/docs/platform/sfvscode-extensions/guide/install.html) for details. Includes the Agentforce Vibes extension.[m
+[31m-- **A development org** - Sign up for a free Developer Edition org [here](https://developer.salesforce.com/signup).[m
+[31m-- **Dev Hub enabled** (optional, required to create scratch orgs) - You can enable Dev Hub in your development org under Setup > Dev Hub.  See [Provide Developers Access to Salesforce DX Tools](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_setup_dx_tools.htm).[m
+[32m+[m[32mThe Placement Management System provides a centralized platform for managing the placement process.[m
+[32m+[m
+[32m+[m[32mThe major flow is:[m
+[32m+[m
+[32m+[m[32m```text[m
+[32m+[m[32mStudent[m
+[32m+[m[32m   ↓[m
+[32m+[m[32mView Eligible Jobs[m
+[32m+[m[32m   ↓[m
+[32m+[m[32mApply for Job[m
+[32m+[m[32m   ↓[m
+[32m+[m[32mApplication Created[m
+[32m+[m[32m   ↓[m
+[32m+[m[32mApplication Processing[m
+[32m+[m[32m   ↓[m
+[32m+[m[32mShortlisted[m
+[32m+[m[32m   ↓[m
+[32m+[m[32mCandidate Synchronization[m
+[32m+[m[32m   ↓[m
+[32m+[m[32mExternal Recruitment System[m
+[32m+[m[32m````[m
+[32m+[m
+[32m+[m[32mThe application combines Salesforce declarative features with programmatic development.[m
+[32m+[m
+[32m+[m[32m---[m
+[32m+[m
+[32m+[m[32m## Main Users[m
+[32m+[m
+[32m+[m[32mThe system is designed around the following users:[m
+[32m+[m
+[32m+[m[32m### Students[m
+[32m+[m
+[32m+[m[32mStudents can:[m
+[32m+[m
+[32m+[m[32m* Maintain their profile[m
+[32m+[m[32m* View eligible jobs[m
+[32m+[m[32m* Apply for jobs[m
+[32m+[m[32m* View their applications[m
+[32m+[m[32m* Track application status[m
+[32m+[m
+[32m+[m[32m### Placement Officers[m
+[32m+[m
+[32m+[m[32mPlacement officers can:[m
+[32m+[m
+[32m+[m[32m* Manage students[m
+[32m+[m[32m* Manage job opportunities[m
+[32m+[m[32m* Review applications[m
+[32m+[m[32m* Update application status[m
+[32m+[m[32m* Monitor placement processing[m
+[32m+[m[32m* Monitor external integration status[m
+[32m+[m
+[32m+[m[32m---[m
+[32m+[m
+[32m+[m[32m## Main Salesforce Objects[m
+[32m+[m
+[32m+[m[32m### Student[m
+[32m+[m
+[32m+[m[32mStores student information such as:[m
+[32m+[m
+[32m+[m[32m* Student Name[m
+[32m+[m[32m* Email[m
+[32m+[m[32m* Branch[m
+[32m+[m[32m* CGPA[m
+[32m+[m
+[32m+[m[32m### Job[m
+[32m+[m
+[32m+[m[32mStores available placement opportunities.[m
+[32m+[m
+[32m+[m[32mImportant fields include:[m
+[32m+[m
+[32m+[m[32m* Job Name[m
+[32m+[m[32m* Company[m
+[32m+[m[32m* Minimum CGPA[m
+[32m+[m[32m* Last Date[m
+[32m+[m[32m* Placement Officer Email[m
+[32m+[m
+[32m+[m[32m### Application[m
+[32m+[m
+[32m+[m[32mRepresents a student's application for a particular job.[m
+[32m+[m
+[32m+[m[32mImportant fields include:[m
+[32m+[m
+[32m+[m[32m* Student[m
+[32m+[m[32m* Job[m
+[32m+[m[32m* Status[m
+[32m+[m[32m* Application Date[m
+[32m+[m[32m* Selection Date[m
+[32m+[m[32m* Integration Status[m
+[32m+[m[32m* External Candidate Id[m
+[32m+[m[32m* Last Integration Time[m
+[32m+[m[32m* Integration Error[m
+[32m+[m
+[32m+[m[32m### Offer Letter[m
+[32m+[m
+[32m+[m[32mStores offer-related information for students who progress through the placement process.[m
+[32m+[m
+[32m+[m[32m---[m
+[32m+[m
+[32m+[m[32m## Main Features[m
+[32m+[m
+[32m+[m[32m### Student Management[m
+[32m+[m
+[32m+[m[32mStudent records can be created and updated through the Student Profile Lightning Web Component.[m
+[32m+[m
+[32m+[m[32mThe component uses Lightning Data Service / UI Record API operations for:[m
+[32m+[m
+[32m+[m[32m* Create[m
+[32m+[m[32m* Read[m
+[32m+[m[32m* Update[m
+[32m+[m[32m* Delete[m
+[32m+[m
+[32m+[m[32m---[m
+[32m+[m
+[32m+[m[32m### Eligible Jobs[m
+[32m+[m
+[32m+[m[32mStudents can select a student profile and view jobs that match the student's eligibility criteria.[m
+[32m+[m
+[32m+[m[32mEligibility can be based on information such as:[m
+[32m+[m
+[32m+[m[32m* CGPA[m
+[32m+[m[32m* Application deadline[m
+[32m+[m[32m* Job requirements[m
+[32m+[m
+[32m+[m[32m---[m
+[32m+[m
+[32m+[m[32m### Job Application[m
+[32m+[m
+[32m+[m[32mStudents can apply for available jobs directly from the Lightning Web Component interface.[m
+[32m+[m
+[32m+[m[32mApplications are stored in `Application__c` and connected to:[m
+[32m+[m
+[32m+[m[32m```text[m
+[32m+[m[32mStudent__c[m
+[32m+[m[32mJob__c[m
+[32m+[m[32m```[m
+[32m+[m
+[32m+[m[32m---[m
+[32m+[m
+[32m+[m[32m### My Applications[m
+[32m+[m
+[32m+[m[32mStudents can view the applications they have submitted and track their current application status.[m
+[32m+[m
+[32m+[m[32m---[m
+[32m+[m
+[32m+[m[32m### Application Processing[m
+[32m+[m
+[32m+[m[32mApplications move through the placement process using Salesforce automation.[m
+[32m+[m
+[32m+[m[32mA key status used in the current application flow is:[m
+[32m+[m
+[32m+[m[32m```text[m
+[32m+[m[32mApplied[m
+[32m+[m[32m↓[m
+[32m+[m[32mShortlisted[m
+[32m+[m[32m```[m
+[32m+[m
+[32m+[m[32mThe system keeps the business application status separate from the external integration status.[m
+[32m+[m
+[32m+[m[32m---[m
+[32m+[m
+[32m+[m[32m## Lightning Web Components[m
+[32m+[m
+[32m+[m[32mThe project contains reusable Lightning Web Components including:[m
+[32m+[m
+[32m+[m[32m```text[m
+[32m+[m[32mapplicationCard[m
+[32m+[m[32meligibleJobs[m
+[32m+[m[32memptyState[m
+[32m+[m[32mjobCard[m
+[32m+[m[32mmyApplications[m
+[32m+[m[32mplacementHome[m
+[32m+[m[32mstatusBadge[m
+[32m+[m[32mstudentProfile[m
+[32m+[m[32m```[m
+[32m+[m
+[32m+[m[32mThe components follow a reusable parent-child architecture where appropriate.[m
+[32m+[m
+[32m+[m[32mFor example:[m
+[32m+[m
+[32m+[m[32m```text[m
+[32m+[m[32mEligible Jobs[m
+[32m+[m[32m     ↓[m
+[32m+[m[32mJob Card[m
+[32m+[m[32m     ↓[m
+[32m+[m[32mApply Event[m
+[32m+[m[32m     ↓[m
+[32m+[m[32mParent Component[m
+[32m+[m[32m     ↓[m
+[32m+[m[32mApplication Processing[m
+[32m+[m[32m```[m
+[32m+[m
+[32m+[m[32mThis keeps individual components focused on specific responsibilities.[m
+[32m+[m
+[32m+[m[32m---[m
+[32m+[m
+[32m+[m[32m## Apex[m
+[32m+[m
+[32m+[m[32mApex is used where the application requires server-side processing and business logic.[m
+[32m+[m
+[32m+[m[32mThe project contains Apex classes supporting:[m
+[32m+[m
+[32m+[m[32m* Application processing[m
+[32m+[m[32m* Asynchronous processing[m
+[32m+[m[32m* External API communication[m
+[32m+[m[32m* Candidate synchronization[m
+[32m+[m[32m* Testing[m
+[32m+[m
+[32m+[m[32m---[m
+[32m+[m
+[32m+[m[32m## Asynchronous Processing[m
+[32m+[m
+[32m+[m[32mThe system uses asynchronous Apex for operations that should not block the user's immediate Salesforce transaction.[m
+[32m+[m
+[32m+[m[32mThe project includes patterns such as:[m
+[32m+[m
+[32m+[m[32m* Queueable Apex[m
+[32m+[m[32m* Other asynchronous processing used during the training project[m
+[32m+[m
+[32m+[m[32mThe candidate synchronization specifically uses:[m
+[32m+[m
+[32m+[m[32m```text[m
+[32m+[m[32mCandidateSyncQueueable[m
+[32m+[m[32m```[m
+[32m+[m
+[32m+[m[32mwhich implements:[m
+[32m+[m
+[32m+[m[32m```apex[m
+[32m+[m[32mQueueable[m
+[32m+[m[32mDatabase.AllowsCallouts[m
+[32m+[m[32m```[m
+[32m+[m
+[32m+[m[32m---[m
+[32m+[m
+[32m+[m[32m## External Recruitment Integration[m
+[32m+[m
+[32m+[m[32mThe Placement Management System communicates with an external recruitment system using a REST API.[m
+[32m+[m
+[32m+[m[32mThe integration flow is:[m
+[32m+[m
+[32m+[m[32m```text[m
+[32m+[m[32mApplication[m
+[32m+[m[32m    ↓[m
+[32m+[m[32mShortlisted[m
+[32m+[m[32m    ↓[m
+[32m+[m[32mCandidateSyncQueueable[m
+[32m+[m[32m    ↓[m
+[32m+[m[32mBuild Candidate JSON[m
+[32m+[m[32m    ↓[m
+[32m+[m[32mNamed Credential[m
+[32m+[m[32m    ↓[m
+[32m+[m[32mPOST /candidates[m
+[32m+[m[32m    ↓[m
+[32m+[m[32mExternal Recruitment API[m
+[32m+[m[32m    ↓[m
+[32m+[m[32mProcess Response[m
+[32m+[m[32m    ↓[m
+[32m+[m[32mUpdate Integration Status[m
+[32m+[m[32m```[m
+[32m+[m
+[32m+[m[32mThe candidate payload contains information obtained from the related Student, Job and Application records.[m
+[32m+[m
+[32m+[m[32m---[m
+[32m+[m
+[32m+[m[32m## Integration Tracking[m
+[32m+[m
+[32m+[m[32mThe Application object contains dedicated fields for tracking external synchronization.[m
+[32m+[m
+[32m+[m[32m### Integration Status[m
+[32m+[m
+[32m+[m[32m```text[m
+[32m+[m[32mIntegration_Status__c[m
+[32m+[m[32m```[m
+[32m+[m
+[32m+[m[32mTracks the state of the external synchronization.[m
+[32m+[m
+[32m+[m[32mExamples include:[m
+[32m+[m
+[32m+[m[32m```text[m
+[32m+[m[32mSent[m
+[32m+[m[32mFailed[m
+[32m+[m[32mRetry Required[m
+[32m+[m[32m```[m
+[32m+[m
+[32m+[m[32m### External Candidate Id[m
+[32m+[m
+[32m+[m[32m```text[m
+[32m+[m[32mExternal_Candidate_Id__c[m
+[32m+[m[32m```[m
+[32m+[m
+[32m+[m[32mStores the candidate identifier returned by the external recruitment system when available.[m
+[32m+[m
+[32m+[m[32m### Last Integration Time[m
+[32m+[m
+[32m+[m[32m```text[m
+[32m+[m[32mLast_Integration_Time__c[m
+[32m+[m[32m```[m
+[32m+[m
+[32m+[m[32mStores the latest integration attempt time.[m
+[32m+[m
+[32m+[m[32m### Integration Error[m
+[32m+[m
+[32m+[m[32m```text[m
+[32m+[m[32mIntegration_Error__c[m
+[32m+[m[32m```[m
+[32m+[m
+[32m+[m[32mStores information about integration failures.[m
+[32m+[m
+[32m+[m[32mThis allows Salesforce users to distinguish between:[m
+[32m+[m
+[32m+[m[32m```text[m
+[32m+[m[32mBusiness Status[m
+[32m+[m[32m```[m
+[32m+[m
+[32m+[m[32mand:[m
+[32m+[m
+[32m+[m[32m```text[m
+[32m+[m[32mIntegration Status[m
+[32m+[m[32m```[m
+[32m+[m
+[32m+[m[32m---[m
+[32m+[m
+[32m+[m[32m## Error Handling[m
+[32m+[m
+[32m+[m[32mThe integration handles different types of HTTP responses.[m
+[32m+[m
+[32m+[m[32m```text[m
+[32m+[m[32m2xx[m
+[32m+[m[32m↓[m
+[32m+[m[32mSuccess / Sent[m
+[32m+[m[32m```[m
+[32m+[m
+[32m+[m[32m```text[m
+[32m+[m[32m400[m
+[32m+[m[32m↓[m
+[32m+[m[32mFailed[m
+[32m+[m[32m```[m
+[32m+[m
+[32m+[m[32m```text[m
+[32m+[m[32m401[m
+[32m+[m[32m↓[m
+[32m+[m[32mAuthentication Failure[m
+[32m+[m[32m```[m
+[32m+[m
+[32m+[m[32m```text[m
+[32m+[m[32m403[m
+[32m+[m[32m↓[m
+[32m+[m[32mForbidden[m
+[32m+[m[32m```[m
+[32m+[m
+[32m+[m[32m```text[m
+[32m+[m[32m500–599[m
+[32m+[m[32m↓[m
+[32m+[m[32mRetry Required[m
+[32m+[m[32m```[m
+[32m+[m
+[32m+[m[32mTemporary external failures are recorded rather than silently ignored.[m
+[32m+[m
+[32m+[m[32mDuring development and testing, the external recruitment endpoint returned errors such as `503 Service Temporarily Unavailable`. The system recorded these failures as `Retry Required` and stored the error information in `Integration_Error__c`.[m
+[32m+[m
+[32m+[m[32mThe external endpoint supplied for the training exercise was not consistently available for successful candidate creation, so successful external candidate creation cannot be represented as a guaranteed production integration.[m
+[32m+[m
+[32m+[m[32m---[m
+[32m+[m
+[32m+[m[32m## Named Credential[m
+[32m+[m
+[32m+[m[32mThe external API is accessed through a Salesforce Named Credential.[m
+[32m+[m
+[32m+[m[32mApex uses:[m
+[32m+[m
+[32m+[m[32m```text[m
+[32m+[m[32mcallout:Recruitment_API/candidates[m
+[32m+[m[32m```[m
+[32m+[m
+[32m+[m[32minstead of hard-coding the external endpoint and authentication information directly into Apex.[m
+[32m+[m
+[32m+[m[32mThis keeps integration configuration separate from application logic.[m
+[32m+[m
+[32m+[m[32m---[m
+[32m+[m
+[32m+[m[32m## Idempotency[m
+[32m+[m
+[32m+[m[32mCandidate synchronization includes protection against sending an application again after it has already been successfully synchronized.[m
+[32m+[m
+[32m+[m[32mThe Queueable checks the integration status before processing:[m
+[32m+[m
+[32m+[m[32m```text[m
+[32m+[m[32mIntegration Status = Sent[m
+[32m+[m[32m        ↓[m
+[32m+[m[32mDo not send again[m
+[32m+[m[32m```[m
+[32m+[m
+[32m+[m[32mThis helps prevent duplicate candidate submissions during repeated processing.[m
+[32m+[m
+[32m+[m[32m---[m
+[32m+[m
+[32m+[m[32m## Testing[m
+[32m+[m
+[32m+[m[32mThe project contains Apex tests for the candidate synchronization logic.[m
+[32m+[m
+[32m+[m[32mImportant test scenarios include:[m
+[32m+[m
+[32m+[m[32m* Successful candidate synchronization[m
+[32m+[m[32m* Server error handling[m
+[32m+[m[32m* Retry-required behaviour[m
+[32m+[m
+[32m+[m[32mQueueable execution can also be verified through Salesforce's asynchronous job records.[m
+[32m+[m
+[32m+[m[32mExample:[m
+[32m+[m
+[32m+[m[32m```sql[m
+[32m+[m[32mSELECT Id, Status, JobType, ApexClass.Name[m
+[32m+[m[32mFROM AsyncApexJob[m
+[32m+[m[32mWHERE JobType = 'Queueable'[m
+[32m+[m[32mORDER BY CreatedDate DESC[m
+[32m+[m[32mLIMIT 5[m
+[32m+[m[32m```[m
+[32m+[m
+[32m+[m[32mIntegration tracking can be verified using:[m
+[32m+[m
+[32m+[m[32m```sql[m
+[32m+[m[32mSELECT[m
+[32m+[m[32m    Id,[m
+[32m+[m[32m    Status__c,[m
+[32m+[m[32m    Integration_Status__c,[m
+[32m+[m[32m    External_Candidate_Id__c,[m
+[32m+[m[32m    Last_Integration_Time__c,[m
+[32m+[m[32m    Integration_Error__c[m
+[32m+[m[32mFROM Application__c[m
+[32m+[m[32mORDER BY CreatedDate DESC[m
+[32m+[m[32mLIMIT 5[m
+[32m+[m[32m```[m
+[32m+[m
+[32m+[m[32m---[m
+ [m
+ ## Project Structure[m
+ [m
+[31m-Your DX project follows this structure:[m
+[32m+[m[32mThe Salesforce source follows the Salesforce DX project structure.[m
+[32m+[m
+[32m+[m[32m```text[m
+[32m+[m[32mPlacementManagement/[m
+[32m+[m[32m│[m
+[32m+[m[32m├── force-app/[m
+[32m+[m[32m│   └── main/[m
+[32m+[m[32m│       └── default/[m
+[32m+[m[32m│           ├── classes/[m
+[32m+[m[32m│           ├── flows/[m
+[32m+[m[32m│           ├── flexipages/[m
+[32m+[m[32m│           ├── layouts/[m
+[32m+[m[32m│           ├── lwc/[m
+[32m+[m[32m│           ├── objects/[m
+[32m+[m[32m│           ├── permissionsets/[m
+[32m+[m[32m│           ├── tabs/[m
+[32m+[m[32m│           └── triggers/[m
+[32m+[m[32m│[m
+[32m+[m[32m├── scripts/[m
+[32m+[m[32m│   ├── apex/[m
+[32m+[m[32m│   └── soql/[m
+[32m+[m[32m│[m
+[32m+[m[32m├── config/[m
+[32m+[m[32m├── manifest/[m
+[32m+[m[32m├── docs/[m
+[32m+[m[32m├── screenshots/[m
+[32m+[m[32m└── README.md[m
+[32m+[m[32m```[m
+[32m+[m
+[32m+[m[32m---[m
+[32m+[m
+[32m+[m[32m## Important Project Areas[m
+[32m+[m
+[32m+[m[32m### `force-app/main/default`[m
+[32m+[m
+[32m+[m[32mContains the Salesforce metadata for the application.[m
+[32m+[m
+[32m+[m[32m### `classes`[m
+[32m+[m
+[32m+[m[32mContains Apex classes and their metadata.[m
+[32m+[m
+[32m+[m[32m### `lwc`[m
+[32m+[m
+[32m+[m[32mContains Lightning Web Components.[m
+[32m+[m
+[32m+[m[32m### `objects`[m
+[32m+[m
+[32m+[m[32mContains custom Salesforce objects and their fields, list views and validation rules.[m
+[32m+[m
+[32m+[m[32m### `flows`[m
+[32m+[m
+[32m+[m[32mContains Salesforce Flow automation.[m
+[32m+[m
+[32m+[m[32m### `triggers`[m
+[32m+[m
+[32m+[m[32mContains Apex triggers.[m
+[32m+[m
+[32m+[m[32m### `scripts`[m
+[32m+[m
+[32m+[m[32mContains Apex and SOQL scripts used for development and testing.[m
+[32m+[m
+[32m+[m[32m### `docs`[m
+[32m+[m
+[32m+[m[32mContains project documentation such as:[m
+[32m+[m
+[32m+[m[32m```text[m
+[32m+[m[32marchitecture[m
+[32m+[m[32mapi[m
+[32m+[m[32mdeployment[m
+[32m+[m[32mdecisions[m
+[32m+[m[32m```[m
+[32m+[m
+[32m+[m[32m### `screenshots`[m
+[32m+[m
+[32m+[m[32mContains selected screenshots demonstrating the important features of the completed application.[m
+[32m+[m
+[32m+[m[32m---[m
+[32m+[m
+[32m+[m[32m## Development Workflow[m
+[32m+[m
+[32m+[m[32mThe project is maintained using Git and Salesforce CLI.[m
+[32m+[m
+[32m+[m[32mThe intended development workflow is:[m
+[32m+[m
+[32m+[m[32m```text[m
+[32m+[m[32mFeature Branch[m
+[32m+[m[32m      ↓[m
+[32m+[m[32mDevelopment[m
+[32m+[m[32m      ↓[m
+[32m+[m[32mCommit[m
+[32m+[m[32m      ↓[m
+[32m+[m[32mPush[m
+[32m+[m[32m      ↓[m
+[32m+[m[32mPull Request[m
+[32m+[m[32m      ↓[m
+[32m+[m[32mCode Review[m
+[32m+[m[32m      ↓[m
+[32m+[m[32mMerge[m
+[32m+[m[32m      ↓[m
+[32m+[m[32mDeployment[m
+[32m+[m[32m      ↓[m
+[32m+[m[32mTesting[m
+[32m+[m[32m```[m
+[32m+[m
+[32m+[m[32mThe Salesforce org is the execution environment, while the Git repository is the source of truth for the project's Salesforce metadata and code.[m
+[32m+[m
+[32m+[m[32m---[m
+[32m+[m
+[32m+[m[32m## Salesforce CLI[m
+[32m+[m
+[32m+[m[32mThe project uses Salesforce CLI for common development activities.[m
+[32m+[m
+[32m+[m[32mExamples include:[m
+[32m+[m
+[32m+[m[32m```bash[m
+[32m+[m[32msf data query[m
+[32m+[m[32m```[m
+[32m+[m
+[32m+[m[32mfor querying Salesforce data,[m
+[32m+[m
+[32m+[m[32m```bash[m
+[32m+[m[32msf apex run[m
+[32m+[m[32m```[m
+[32m+[m
+[32m+[m[32mfor executing anonymous Apex,[m
+[32m+[m
+[32m+[m[32m```bash[m
+[32m+[m[32msf apex run test[m
+[32m+[m[32m```[m
+[32m+[m
+[32m+[m[32mfor running Apex tests,[m
+[32m+[m
+[32m+[m[32mand:[m
+[32m+[m
+[32m+[m[32m```bash[m
+[32m+[m[32msf project deploy start[m
+[32m+[m[32m```[m
+[32m+[m
+[32m+[m[32mfor deploying Salesforce metadata.[m
+[32m+[m
+[32m+[m[32m---[m
+[32m+[m
+[32m+[m[32m## Deployment[m
+[32m+[m
+[32m+[m[32mBefore deployment, the target Salesforce org should always be verified.[m
+[32m+[m
+[32m+[m[32mThe general deployment process is:[m
+[32m+[m
+[32m+[m[32m```text[m
+[32m+[m[32mCheck Git branch[m
+[32m+[m[32m      ↓[m
+[32m+[m[32mReview changes[m
+[32m+[m[32m      ↓[m
+[32m+[m[32mRun tests[m
+[32m+[m[32m      ↓[m
+[32m+[m[32mDeploy metadata[m
+[32m+[m[32m      ↓[m
+[32m+[m[32mVerify deployment[m
+[32m+[m[32m      ↓[m
+[32m+[m[32mPerform manual testing[m
+[32m+[m[32m```[m
+[32m+[m
+[32m+[m[32mDeployment documentation is maintained separately under:[m
+[32m+[m
+[32m+[m[32m```text[m
+[32m+[m[32mdocs/deployment/[m
+[32m+[m[32m```[m
+[32m+[m
+[32m+[m[32m---[m
+[32m+[m
+[32m+[m[32m## Documentation[m
+[32m+[m
+[32m+[m[32mThe project documentation is organized into separate areas:[m
+[32m+[m
+[32m+[m[32m```text[m
+[32m+[m[32mdocs/[m
+[32m+[m[32m│[m
+[32m+[m[32m├── architecture/[m
+[32m+[m[32m│[m
+[32m+[m[32m├── api/[m
+[32m+[m[32m│[m
+[32m+[m[32m├── deployment/[m
+[32m+[m[32m│[m
+[32m+[m[32m└── decisions/[m
+[32m+[m[32m```[m
+[32m+[m
+[32m+[m[32m### Architecture[m
+[32m+[m
+[32m+[m[32mExplains the overall Salesforce architecture and how the major components communicate.[m
+[32m+[m
+[32m+[m[32m### API[m
+[32m+[m
+[32m+[m[32mDocuments the external recruitment API and candidate synchronization.[m
+[32m+[m
+[32m+[m[32m### Deployment[m
+[32m+[m
+[32m+[m[32mDocuments how to set up, test and deploy the project.[m
+[32m+[m
+[32m+[m[32m### Decisions[m
+[32m+[m
+[32m+[m[32mDocuments important technical decisions and the reasoning behind them.[m
+[32m+[m
+[32m+[m[32m---[m
+[32m+[m
+[32m+[m[32m## Screenshots[m
+[32m+[m
+[32m+[m[32mThe `screenshots/` directory contains selected visual evidence of the main application features, including:[m
+[32m+[m
+[32m+[m[32m* Placement Home[m
+[32m+[m[32m* Student Profile[m
+[32m+[m[32m* Eligible Jobs[m
+[32m+[m[32m* Job Application[m
+[32m+[m[32m* My Applications[m
+[32m+[m[32m* Application Status[m
+[32m+[m[32m* Application Automation[m
+[32m+[m[32m* Candidate Integration / Integration Status when demonstrable[m
+[32m+[m[32m* Salesforce project structure[m
+[32m+[m
+[32m+[m[32mScreenshots are intended to demonstrate important final features rather than document every training day.[m
+[32m+[m
+[32m+[m[32m---[m
+[32m+[m
+[32m+[m[32m## Current Limitations[m
+[32m+[m
+[32m+[m[32mThe external recruitment API used during the training exercise was not consistently available for successful candidate creation.[m
+[32m+[m
+[32m+[m[32mBecause of this, the integration implementation and error-handling behaviour were tested, but a successful external candidate response could not be guaranteed.[m
+[32m+[m
+[32m+[m[32mThe system is designed to record these failures using:[m
+[32m+[m
+[32m+[m[32m```text[m
+[32m+[m[32mIntegration_Status__c[m
+[32m+[m[32mIntegration_Error__c[m
+[32m+[m[32mLast_Integration_Time__c[m
+[32m+[m[32m```[m
+[32m+[m
+[32m+[m[32mand mark temporary server-side failures as:[m
+ [m
+[31m-- **`force-app/main/default/`** - Your metadata source files live in this default package directory. You can configure additional package directories in the `sfdx-project.json` file.[m
+[31m-- **`config/`** - Scratch org definitions and project settings[m
+[31m-- **`scripts/`** - Automation scripts for common tasks[m
+[31m-- **`sfdx-project.json`** - Project manifest that defines package directories, namespace, API version, and other project-level settings[m
+[32m+[m[32m```text[m
+[32m+[m[32mRetry Required[m
+[32m+[m[32m```[m
+ [m
+[31m-See [Salesforce DX Project Configuration](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_ws_config.htm).[m
+[32m+[m[32m---[m
+ [m
+[31m-## Get Started[m
+[32m+[m[32m## Future Improvements[m
+ [m
+[31m-Ready to start developing? The [Get Started with Salesforce DX](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_get_started_dx.htm) guide walks you through your first project, from creating a scratch org to creating a simple Apex class or LWC to deploying your code to a sandbox.[m
+[32m+[m[32mPossible future improvements include:[m
+ [m
+[31m-## Common Salesforce CLI Commands[m
+[32m+[m[32m* Production recruitment API integration[m
+[32m+[m[32m* More robust retry scheduling[m
+[32m+[m[32m* Stronger idempotency using external reference keys[m
+[32m+[m[32m* Improved integration monitoring[m
+[32m+[m[32m* Centralized error logging[m
+[32m+[m[32m* Expanded Apex test coverage[m
+[32m+[m[32m* More granular security configuration[m
+[32m+[m[32m* CI/CD automation[m
+[32m+[m[32m* Automated deployment validation[m
+[32m+[m[32m* Improved student and placement officer dashboards[m
+[32m+[m[32m* Production-grade authentication and integration monitoring[m
+ [m
+[31m-Here are common CLI commands that you'll use the most:[m
+[32m+[m[32m---[m
+ [m
+[31m-- `sf org login web`: Authorize an org[m
+[31m-- `sf org open`: Open your org in a browser[m
+[31m-- `sf org create scratch`: Create a scratch org[m
+[31m-- `sf project deploy start`: Deploy metadata to your org[m
+[31m-- `sf project retrieve start`: Retrieve metadata from your org[m
+[31m-- `sf template generate <artifact>`: Scaffold new components, such as Apex classes and triggers, LWC components, Lightning apps, and more[m
+[31m-- `sf apex <command>`: Run Apex tests, run anonymous Apex blocks, and view logs[m
+[31m-- `sf data <command>`: Work with test data[m
+[31m-- `sf alias <command>`: Manage org aliases[m
+[31m-- `sf config <command>`: Configure CLI settings[m
+[32m+[m[32m## Final Outcome[m
+ [m
+[31m-## Use Agentforce Vibes to Build Lightning Apps[m
+[32m+[m[32mThe Placement Management System evolved from a Salesforce learning project into a complete application combining:[m
+ [m
+[31m-Transform your ideas into custom Lightning apps that extend CRM workflows directly in Lightning Experience. Through natural conversations with Agentforce Vibes, implement custom objects and fields, complex business logic, and dynamic UI components. See [Build a Lightning App Using Agentforce Vibes](https://developer.salesforce.com/docs/platform/einstein-for-devs/guide/lexapp-overview.html).[m
+[32m+[m[32m```text[m
+[32m+[m[32mSalesforce Data Model[m
+[32m+[m[32m        +[m
+[32m+[m[32mDeclarative Automation[m
+[32m+[m[32m        +[m
+[32m+[m[32mApex[m
+[32m+[m[32m        +[m
+[32m+[m[32mAsynchronous Apex[m
+[32m+[m[32m        +[m
+[32m+[m[32mLightning Web Components[m
+[32m+[m[32m        +[m
+[32m+[m[32mREST API Integration[m
+[32m+[m[32m        +[m
+[32m+[m[32mNamed Credentials[m
+[32m+[m[32m        +[m
+[32m+[m[32mError Handling[m
+[32m+[m[32m        +[m
+[32m+[m[32mTesting[m
+[32m+[m[32m        +[m
+[32m+[m[32mGit Version Control[m
+[32m+[m[32m```[m
+ [m
+[31m-## Additional Resources[m
+[32m+[m[32mThe project demonstrates how a Salesforce application can be developed incrementally and prepared for team-based development, testing and deployment.[m
+ [m
+[31m-- [Agentforce Vibes Developer Guide](https://developer.salesforce.com/docs/platform/einstein-for-devs/guide/einstein-overview.html)[m
+[31m-- [Salesforce CLI Installation Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_intro.htm)[m
+[31m-- [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/)[m
+[31m-- [Salesforce CLI Command Reference](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/)[m
+[31m-- [Salesforce CLI Plugin Development Guide](https://developer.salesforce.com/docs/platform/salesforce-cli-plugin/guide/conceptual-overview.html)[m
+[31m-- [Salesforce VS Code Extensions Documentation](https://developer.salesforce.com/tools/vscode/)[m
+[32m+[m[32mThe next stage is to strengthen the project with professional development practices, security, deployment processes and production-readiness considerations.[m
+ [m
+[32m+[m[32m```[m
+[32m+[m[32m```[m
+[1mdiff --git a/projects/PlacementManagement/force-app/main/default/lwc/studentProfile/studentProfile.html b/projects/PlacementManagement/force-app/main/default/lwc/studentProfile/studentProfile.html[m
+[1mindex 21ba357..ef93e20 100644[m
+[1m--- a/projects/PlacementManagement/force-app/main/default/lwc/studentProfile/studentProfile.html[m
+[1m+++ b/projects/PlacementManagement/force-app/main/default/lwc/studentProfile/studentProfile.html[m
+[36m@@ -16,7 +16,33 @@[m
+                     label="Student Name"[m
+                     value={name}[m
+                     onchange={handleChange}[m
+[31m-                    data-field="name">[m
+[32m+[m[32m                    data-field="name"[m
+[32m+[m[32m                    required>[m
+[32m+[m[32m                </lightning-input>[m
+[32m+[m
+[32m+[m[32m            </div>[m
+[32m+[m
+[32m+[m[32m            <div class="slds-m-top_medium">[m
+[32m+[m
+[32m+[m[32m                <lightning-input[m
+[32m+[m[32m                    label="Email"[m
+[32m+[m[32m                    type="email"[m
+[32m+[m[32m                    value={email}[m
+[32m+[m[32m                    onchange={handleChange}[m
+[32m+[m[32m                    data-field="email"[m
+[32m+[m[32m                    required>[m
+[32m+[m[32m                </lightning-input>[m
+[32m+[m
+[32m+[m[32m            </div>[m
+[32m+[m
+[32m+[m[32m            <div class="slds-m-top_medium">[m
+[32m+[m
+[32m+[m[32m                <lightning-input[m
+[32m+[m[32m                    label="Branch"[m
+[32m+[m[32m                    value={branch}[m
+[32m+[m[32m                    onchange={handleChange}[m
+[32m+[m[32m                    data-field="branch"[m
+[32m+[m[32m                    required>[m
+                 </lightning-input>[m
+ [m
+             </div>[m
+[36m@@ -31,7 +57,8 @@[m
+                     max="10"[m
+                     value={cgpa}[m
+                     onchange={handleChange}[m
+[31m-                    data-field="cgpa">[m
+[32m+[m[32m                    data-field="cgpa"[m
+[32m+[m[32m                    required>[m
+                 </lightning-input>[m
+ [m
+             </div>[m
+[1mdiff --git a/projects/PlacementManagement/force-app/main/default/lwc/studentProfile/studentProfile.js b/projects/PlacementManagement/force-app/main/default/lwc/studentProfile/studentProfile.js[m
+[1mindex 040c32b..3391bf3 100644[m
+[1m--- a/projects/PlacementManagement/force-app/main/default/lwc/studentProfile/studentProfile.js[m
+[1m+++ b/projects/PlacementManagement/force-app/main/default/lwc/studentProfile/studentProfile.js[m
+[36m@@ -1,4 +1,5 @@[m
+ import { LightningElement, wire } from 'lwc';[m
+[32m+[m
+ import {[m
+     createRecord,[m
+     getRecord,[m
+[36m@@ -7,11 +8,16 @@[m [mimport {[m
+ } from 'lightning/uiRecordApi';[m
+ [m
+ import STUDENT_OBJECT from '@salesforce/schema/Student__c';[m
+[32m+[m
+ import NAME_FIELD from '@salesforce/schema/Student__c.Name';[m
+[32m+[m[32mimport EMAIL_FIELD from '@salesforce/schema/Student__c.Email__c';[m
+[32m+[m[32mimport BRANCH_FIELD from '@salesforce/schema/Student__c.Branch__c';[m
+ import CGPA_FIELD from '@salesforce/schema/Student__c.CGPA__c';[m
+ [m
+ const FIELDS = [[m
+     NAME_FIELD,[m
+[32m+[m[32m    EMAIL_FIELD,[m
+[32m+[m[32m    BRANCH_FIELD,[m
+     CGPA_FIELD[m
+ ];[m
+ [m
+[36m@@ -19,6 +25,8 @@[m [mexport default class StudentProfile extends LightningElement {[m
+ [m
+     studentId = '';[m
+     name = '';[m
+[32m+[m[32m    email = '';[m
+[32m+[m[32m    branch = '';[m
+     cgpa = '';[m
+     message = '';[m
+ [m
+[36m@@ -31,14 +39,18 @@[m [mexport default class StudentProfile extends LightningElement {[m
+         if (data) {[m
+ [m
+             this.name = data.fields.Name.value;[m
+[32m+[m[32m            this.email = data.fields.Email__c.value;[m
+[32m+[m[32m            this.branch = data.fields.Branch__c.value;[m
+             this.cgpa = data.fields.CGPA__c.value;[m
+ [m
+[31m-            this.message = 'Student record loaded successfully.';[m
+[32m+[m[32m            this.message =[m
+[32m+[m[32m                'Student record loaded successfully.';[m
+ [m
+         } else if (error) {[m
+ [m
+             this.message =[m
+[31m-                error.body?.message || 'Error loading student record.';[m
+[32m+[m[32m                error.body?.message ||[m
+[32m+[m[32m                'Error loading student record.';[m
+         }[m
+     }[m
+ [m
+[36m@@ -61,6 +73,8 @@[m [mexport default class StudentProfile extends LightningElement {[m
+         const fields = {};[m
+ [m
+         fields[NAME_FIELD.fieldApiName] = this.name;[m
+[32m+[m[32m        fields[EMAIL_FIELD.fieldApiName] = this.email;[m
+[32m+[m[32m        fields[BRANCH_FIELD.fieldApiName] = this.branch;[m
+         fields[CGPA_FIELD.fieldApiName] = Number(this.cgpa);[m
+ [m
+         const recordInput = {[m
+[36m@@ -80,7 +94,8 @@[m [mexport default class StudentProfile extends LightningElement {[m
+         } catch (error) {[m
+ [m
+             this.message =[m
+[31m-                error.body?.message || 'Error creating student.';[m
+[32m+[m[32m                error.body?.message ||[m
+[32m+[m[32m                'Error creating student.';[m
+         }[m
+     }[m
+ [m
+[36m@@ -98,6 +113,8 @@[m [mexport default class StudentProfile extends LightningElement {[m
+ [m
+         fields.Id = this.studentId;[m
+         fields[NAME_FIELD.fieldApiName] = this.name;[m
+[32m+[m[32m        fields[EMAIL_FIELD.fieldApiName] = this.email;[m
+[32m+[m[32m        fields[BRANCH_FIELD.fieldApiName] = this.branch;[m
+         fields[CGPA_FIELD.fieldApiName] = Number(this.cgpa);[m
+ [m
+         try {[m
+[36m@@ -112,7 +129,8 @@[m [mexport default class StudentProfile extends LightningElement {[m
+         } catch (error) {[m
+ [m
+             this.message =[m
+[31m-                error.body?.message || 'Error updating student.';[m
+[32m+[m[32m                error.body?.message ||[m
+[32m+[m[32m                'Error updating student.';[m
+         }[m
+     }[m
+ [m
+[36m@@ -135,12 +153,15 @@[m [mexport default class StudentProfile extends LightningElement {[m
+ [m
+             this.studentId = '';[m
+             this.name = '';[m
+[32m+[m[32m            this.email = '';[m
+[32m+[m[32m            this.branch = '';[m
+             this.cgpa = '';[m
+ [m
+         } catch (error) {[m
+ [m
+             this.message =[m
+[31m-                error.body?.message || 'Error deleting student.';[m
+[32m+[m[32m                error.body?.message ||[m
+[32m+[m[32m                'Error deleting student.';[m
+         }[m
+     }[m
+ }[m
+\ No newline at end of file[m
+[1mdiff --git a/projects/PlacementManagement/force-app/main/default/triggers/ApplicationTrigger.trigger b/projects/PlacementManagement/force-app/main/default/triggers/ApplicationTrigger.trigger[m
+[1mindex 48b09bd..112a567 100644[m
+[1m--- a/projects/PlacementManagement/force-app/main/default/triggers/ApplicationTrigger.trigger[m
+[1m+++ b/projects/PlacementManagement/force-app/main/default/triggers/ApplicationTrigger.trigger[m
+[36m@@ -1,14 +1,22 @@[m
+[32m+[m[32mtrigger ApplicationTrigger on Application__c (after update) {[m
+ [m
+[32m+[m[32m    for (Application__c application : Trigger.new) {[m
+ [m
+[31m-trigger ApplicationTrigger on Application__c(before insert, before update, after update){[m
+[31m-    if(Trigger.isBefore && Trigger.isInsert){[m
+[31m-        ApplicationTriggerHandler.beforeInsert(Trigger.new);[m
+[31m-    }[m
+[31m-    if(Trigger.isBefore && Trigger.isUpdate){[m
+[31m-        ApplicationTriggerHandler.beforeUpdate(Trigger.new, Trigger.oldMap);[m
+[31m-    }[m
+[31m-    if(Trigger.isAfter && Trigger.isUpdate){[m
+[31m-        ApplicationTriggerHandler.afterUpdate(Trigger.new, Trigger.oldMap);[m
+[31m-    }[m
+[32m+[m[32m        Application__c oldApplication =[m
+[32m+[m[32m            Trigger.oldMap.get(application.Id);[m
+ [m
+[32m+[m[32m        /*[m
+[32m+[m[32m         * Only synchronize when the Application[m
+[32m+[m[32m         * transitions INTO Shortlisted.[m
+[32m+[m[32m         */[m
+[32m+[m[32m        if ([m
+[32m+[m[32m            application.Status__c == 'Shortlisted' &&[m
+[32m+[m[32m            oldApplication.Status__c != 'Shortlisted'[m
+[32m+[m[32m        ) {[m
+[32m+[m
+[32m+[m[32m            System.enqueueJob([m
+[32m+[m[32m                new CandidateSyncQueueable(application.Id)[m
+[32m+[m[32m            );[m
+[32m+[m[32m        }[m
+[32m+[m[32m    }[m
+ }[m
+\ No newline at end of file[m
+[1mdiff --git a/projects/PlacementManagement/force-app/main/default/triggers/ApplicationTrigger.trigger-meta.xml b/projects/PlacementManagement/force-app/main/default/triggers/ApplicationTrigger.trigger-meta.xml[m
+[1mindex a8e66ed..b1e8667 100644[m
+[1m--- a/projects/PlacementManagement/force-app/main/default/triggers/ApplicationTrigger.trigger-meta.xml[m
+[1m+++ b/projects/PlacementManagement/force-app/main/default/triggers/ApplicationTrigger.trigger-meta.xml[m
+[36m@@ -1,5 +1,5 @@[m
+ <?xml version="1.0" encoding="UTF-8"?>[m
+ <ApexTrigger xmlns="http://soap.sforce.com/2006/04/metadata">[m
+[31m-    <apiVersion>67.0</apiVersion>[m
+[31m-    <status>Active</status>[m
+[32m+[m[32m  <apiVersion>67.0</apiVersion>[m
+[32m+[m[32m  <status>Active</status>[m
+ </ApexTrigger>[m
