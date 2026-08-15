@@ -1,0 +1,1 @@
+RecruitmentApiService.sendTestCandidate();

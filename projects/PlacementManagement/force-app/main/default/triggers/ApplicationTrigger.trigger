@@ -1,14 +1,22 @@
+trigger ApplicationTrigger on Application__c (after update) {
 
+    for (Application__c application : Trigger.new) {
 
-trigger ApplicationTrigger on Application__c(before insert, before update, after update){
-    if(Trigger.isBefore && Trigger.isInsert){
-        ApplicationTriggerHandler.beforeInsert(Trigger.new);
-    }
-    if(Trigger.isBefore && Trigger.isUpdate){
-        ApplicationTriggerHandler.beforeUpdate(Trigger.new, Trigger.oldMap);
-    }
-    if(Trigger.isAfter && Trigger.isUpdate){
-        ApplicationTriggerHandler.afterUpdate(Trigger.new, Trigger.oldMap);
-    }
+        Application__c oldApplication =
+            Trigger.oldMap.get(application.Id);
 
+        /*
+         * Only synchronize when the Application
+         * transitions INTO Shortlisted.
+         */
+        if (
+            application.Status__c == 'Shortlisted' &&
+            oldApplication.Status__c != 'Shortlisted'
+        ) {
+
+            System.enqueueJob(
+                new CandidateSyncQueueable(application.Id)
+            );
+        }
+    }
 }
