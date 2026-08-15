@@ -16,7 +16,33 @@
                     label="Student Name"
                     value={name}
                     onchange={handleChange}
-                    data-field="name">
+                    data-field="name"
+                    required>
+                </lightning-input>
+
+            </div>
+
+            <div class="slds-m-top_medium">
+
+                <lightning-input
+                    label="Email"
+                    type="email"
+                    value={email}
+                    onchange={handleChange}
+                    data-field="email"
+                    required>
+                </lightning-input>
+
+            </div>
+
+            <div class="slds-m-top_medium">
+
+                <lightning-input
+                    label="Branch"
+                    value={branch}
+                    onchange={handleChange}
+                    data-field="branch"
+                    required>
                 </lightning-input>
 
             </div>
@@ -31,7 +57,8 @@
                     max="10"
                     value={cgpa}
                     onchange={handleChange}
-                    data-field="cgpa">
+                    data-field="cgpa"
+                    required>
                 </lightning-input>
 
             </div>
