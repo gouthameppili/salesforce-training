@@ -1,4 +1,4 @@
-public class RecruitmentApiService {
+public with sharing class RecruitmentApiService {
 
     public static void sendTestCandidate() {
 

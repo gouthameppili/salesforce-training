@@ -1,4 +1,4 @@
-public class CandidateSyncQueueable implements Queueable, Database.AllowsCallouts {
+public with sharing class CandidateSyncQueueable implements Queueable, Database.AllowsCallouts {
 
     private Id applicationId;
 
