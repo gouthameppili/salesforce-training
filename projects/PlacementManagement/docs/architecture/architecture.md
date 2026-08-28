@@ -1,4 +1,4 @@
-````markdown
+````
 # Architecture Documentation
 
 ## Placement Management System

@@ -26,88 +26,59 @@
 
             <lightning-input
                 label="Search Job"
-                placeholder="Enter job name..."
+                placeholder="Enter job or company name..."
+                value={searchJob}
                 onchange={handleSearch}>
             </lightning-input>
 
             <br>
 
-            <p>You typed: {searchJob}</p>
+            <template lwc:if={hasJobs}>
 
-            <br>
+                <p style="color:green;">
+                    ✅ Jobs Available
+                </p>
 
-        <template lwc:if={hasJobs}>
-            <p style="color:green;">
-                ✅ Jobs Available
-            </p>
-        </template>
+            </template>
 
-        <template lwc:else>
-            <p style="color:red;">
-                ❌ No Jobs Available
-            </p>
-        </template>
+            <template lwc:else>
+
+                <p style="color:red;">
+                    ❌ No Jobs Available
+                </p>
+
+            </template>
 
         </div>
 
     </lightning-card>
 
-    <br>
-
-    <h2>Available Jobs</h2>
-
-    <template for:each={jobList} for:item="job">
-
-        <div key={job.id}
-            class="slds-box slds-m-bottom_small">
-
-            {job.name}
-
-        </div>
-
-    </template>
 
     <br>
 
-<h2 class="slds-text-heading_medium">
-    Students
-</h2>
 
-    <template if:true={students}>
+    <!-- Available Jobs -->
 
-        <template for:each={students} for:item="student">
-
-            <div
-                key={student.Id}
-                class="slds-box slds-m-bottom_small">
-
-                <strong>{student.Name}</strong>
-
-                <br>
-
-                CGPA : {student.CGPA__c}
-
-            </div>
-
-        </template>
-
-    </template>
-
-    <br>
-
-    <h2 class="slds-text-heading_medium">
-        Jobs
+    <h2 class="slds-text-heading_medium slds-p-left_small">
+        Available Jobs
     </h2>
 
-    <template if:true={jobs}>
 
-        <template for:each={jobs} for:item="job">
+    <template lwc:if={hasJobs}>
+
+        <template
+            for:each={filteredJobs}
+            for:item="job">
 
             <div
                 key={job.Id}
-                class="slds-box slds-m-bottom_small">
+                class="slds-box slds-m-around_small">
 
                 <strong>{job.Name}</strong>
+
+                <br>
+
+                Company : {job.Company__c}
 
                 <br>
 
@@ -116,6 +87,50 @@
                 <br>
 
                 Last Date : {job.Last_Date__c}
+
+            </div>
+
+        </template>
+
+    </template>
+
+
+    <template lwc:else>
+
+        <div class="slds-p-around_medium">
+
+            No matching jobs found.
+
+        </div>
+
+    </template>
+
+
+    <br>
+
+
+    <!-- Students -->
+
+    <h2 class="slds-text-heading_medium slds-p-left_small">
+        Students
+    </h2>
+
+
+    <template lwc:if={students}>
+
+        <template
+            for:each={students}
+            for:item="student">
+
+            <div
+                key={student.Id}
+                class="slds-box slds-m-around_small">
+
+                <strong>{student.Name}</strong>
+
+                <br>
+
+                CGPA : {student.CGPA__c}
 
             </div>
 

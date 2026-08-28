@@ -1,4 +1,4 @@
-````markdown
+````
 # Salesforce Security Model
 
 ## Overview

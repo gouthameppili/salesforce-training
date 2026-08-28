@@ -1,4 +1,4 @@
-````markdown
+````
 # Sharing Model
 
 ## Overview

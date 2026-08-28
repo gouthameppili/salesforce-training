@@ -1,84 +1,153 @@
 import { LightningElement, wire } from 'lwc';
+
 import getStudents from '@salesforce/apex/DashboardController.getStudents';
-import getJobs from '@salesforce/apex/DashboardController.getJobs';
+import getDashboardJobs from '@salesforce/apex/DashboardController.getDashboardJobs';
+import getDashboardStats from '@salesforce/apex/DashboardController.getDashboardStats';
+
+import { refreshApex } from '@salesforce/apex';
+
 export default class PlacementHome extends LightningElement {
 
-    students;
-    jobs;
+    students = [];
+    jobs = [];
+
+    companyCount = 0;
+    jobCount = 0;
+    applicationCount = 0;
+
+    searchJob = '';
+
+    studentsResult;
+    jobsResult;
+    statsResult;
+
+
+    dashboardTitle = 'Placement Management Dashboard';
+
+    welcomeMessage = 'Welcome Goutham 👋';
+
+
+    /*
+     * Get students from Salesforce.
+     */
     @wire(getStudents)
-    wiredStudents({ data, error }) {
+    wiredStudents(result) {
+
+        this.studentsResult = result;
+
+        const { data, error } = result;
 
         if (data) {
-
             this.students = data;
-
-            console.log(data);
-
         } else if (error) {
-
-            console.error(error);
-
-        }   
-
+            console.error('Student loading error:', error);
+        }
     }
 
-    @wire(getJobs)
-    wiredJobs({ data, error }) {
+
+    /*
+     * Get dashboard jobs from Salesforce.
+     */
+    @wire(getDashboardJobs)
+    wiredJobs(result) {
+
+        this.jobsResult = result;
+
+        const { data, error } = result;
+
+        if (data) {
+            this.jobs = data;
+        } else if (error) {
+            console.error('Job loading error:', error);
+        }
+    }
+
+
+    /*
+     * Get dashboard statistics from Salesforce.
+     */
+    @wire(getDashboardStats)
+    wiredStats(result) {
+
+        this.statsResult = result;
+
+        const { data, error } = result;
 
         if (data) {
 
-            this.jobs = data;
-
-            console.log(data);
+            this.companyCount = data.companyCount;
+            this.jobCount = data.jobCount;
+            this.applicationCount = data.applicationCount;
 
         } else if (error) {
 
-            console.error(error);
+            console.error('Dashboard statistics error:', error);
+        }
+    }
 
+
+    /*
+     * Filter jobs based on the search text.
+     */
+    get filteredJobs() {
+
+        if (!this.searchJob) {
+            return this.jobs;
         }
 
+        const searchTerm = this.searchJob.toLowerCase();
+
+        return this.jobs.filter(job => {
+
+            const jobName = job.Name
+                ? job.Name.toLowerCase()
+                : '';
+
+            const companyName = job.Company__c
+                ? job.Company__c.toLowerCase()
+                : '';
+
+            return (
+                jobName.includes(searchTerm) ||
+                companyName.includes(searchTerm)
+            );
+        });
     }
 
-    dashboardTitle = "Placement Management Dashboard";
 
-    welcomeMessage = "Welcome Goutham 👋";
-
-    companyCount = 12;
-    jobCount = 10;
-    applicationCount = 58;
-
-    searchJob = "";
-
-    handleRefresh() {
-        this.jobCount--;
-        this.applicationCount--;
+    /*
+     * Whether jobs are available.
+     */
+    get hasJobs() {
+        return this.filteredJobs.length > 0;
     }
 
+
+    /*
+     * Refresh actual Salesforce data.
+     */
+    async handleRefresh() {
+
+        try {
+
+            await Promise.all([
+                refreshApex(this.studentsResult),
+                refreshApex(this.jobsResult),
+                refreshApex(this.statsResult)
+            ]);
+
+        } catch (error) {
+
+            console.error('Dashboard refresh error:', error);
+        }
+    }
+
+
+    /*
+     * Update search text.
+     */
     handleSearch(event) {
+
         this.searchJob = event.target.value;
     }
-
-    get hasJobs() {
-        return this.jobCount > 0;
-    }
-
-    jobList = [
-    {
-        id:1,
-        name:'Salesforce Developer'
-    },
-    {
-        id:2,
-        name:'Java Developer'
-    },
-    {
-        id:3,
-        name:'Python Developer'
-    },
-    {
-        id:4,
-        name:'React Developer'
-    }
-];
-
 }

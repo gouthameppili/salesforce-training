@@ -1,4 +1,4 @@
-````markdown
+````
 # Day 14 - Securing the Salesforce Application
 
 ## Objective
